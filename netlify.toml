@@ -1,0 +1,18 @@
+# netlify.toml
+
+[build]
+  command = "npm run build"     # Or yarn build, pnpm build
+  publish = "dist"              # Vite's output directory
+  functions = "netlify/functions" # Directory for Netlify functions
+
+# Redirect rule to map frontend API calls to the Netlify function
+[[redirects]]
+  from = "/api/*"                # Path called by the frontend fetch
+  to = "/.netlify/functions/:splat" # Internal path to the function
+  status = 200                   # Use 200 for function rewrites
+
+# Optional: Specify Node.js version for functions if needed
+[functions]
+  node_bundler = "esbuild"
+#  [functions.node_config]
+#    runtime = "nodejs18.x"
